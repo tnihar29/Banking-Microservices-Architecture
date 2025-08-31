@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: "gatewayserver"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+  kafka:
+    bootstrap-servers: kafka:9092
+  bus:
+    enabled: true
+    id: ${spring.application.name}:${random.value}
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: false
+              lower-case-service-id: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      access: unrestricted
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: "gatewayserver"
+    description: "Nihar Bank Gateway Server Application"
+    version: "1.0.0"
+
+logging:
+  level:
+    com:
+      example:
+        gatewayserver: DEBUG
