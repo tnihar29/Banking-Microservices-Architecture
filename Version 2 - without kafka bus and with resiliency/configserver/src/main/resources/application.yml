@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: "configserver"
+  profiles:
+    # active: native
+    active: git
+  cloud:
+    config:
+      server:
+        # native:
+        # search-locations: "classpath:/config"
+        # search-locations: "file:///Users//nihar//Documents//config"
+        git:
+          uri: "https://github.com/tnihar29/bank-ms-config.git"
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+          username: ${GITHUB_USER}
+          password: ${GITHUB_TOKEN}
+#    bus:
+#      enabled: true
+#      id: ${spring.application.name}:${random.value}
+#    stream:
+#      kafka:
+#        binder:
+#          brokers: kafka:9092
+#  kafka:
+#    bootstrap-servers: kafka:9092
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+encrypt:
+  key: ${ENCRYPT_KEY}
+
+server:
+  port: 8071
